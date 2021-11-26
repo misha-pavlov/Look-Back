@@ -1,0 +1,19 @@
+node_modules
+build
+.env*
+.idea/*
+/dump.rdb
+.elasticbeanstalk
+.DS_Store
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# NYC Code Coverage Files
+coverage
+.nyc_output
+
+# Datadog agent log files 
+logs/
