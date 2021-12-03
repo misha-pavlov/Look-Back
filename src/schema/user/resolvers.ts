@@ -13,7 +13,7 @@ export const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (args: { userName: any; email: any; password: any }) => {
+    addUser: async (root: any, args: { userName: any; email: any; password: any }) => {
       const { userName, email, password } = args;
       const userObj = new User({
         userName,
