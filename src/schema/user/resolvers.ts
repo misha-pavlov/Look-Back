@@ -13,6 +13,11 @@ export const resolvers = {
           console.error(err);
         });
     },
+    getUser: async (root, args) => {
+      const { userId } = args;
+      const result = await User.findOne({ id: userId });
+      return result;
+    },
   } as QueryResolvers,
   Mutation: {
     addUser: async (root, args) => {
