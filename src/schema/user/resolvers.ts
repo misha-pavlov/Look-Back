@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
 import { User } from '../../models/userModel';
-import { MutationResolvers, QueryResolvers } from '../../generated/graphql';
+import { MutationResolvers, QueryResolvers, UserResolvers } from '../../generated/graphql';
 
 export const resolvers = {
   Query: {
@@ -23,12 +24,26 @@ export const resolvers = {
       });
       return userObj
         .save()
-        .then((result: { _doc: any }) => {
+        .then((result: { _doc: UserResolvers }) => {
           return { ...result._doc };
         })
-        .catch((err: any) => {
+        .catch((err: string) => {
           console.error(err);
         });
+    },
+    addPost: async (root, args) => {
+      const { userId, img, title, tags } = args;
+
+      const postObj = {
+        _id: uuidv4(),
+        title,
+        img,
+        tags,
+        comments: [],
+      };
+
+      const result = await User.findOneAndUpdate({ id: userId }, { $addToSet: { posts: postObj } });
+      return result;
     },
   } as MutationResolvers,
 };

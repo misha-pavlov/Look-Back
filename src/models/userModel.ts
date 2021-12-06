@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
   userName: {
     type: String,
     required: true,
@@ -13,6 +17,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  posts: {
+    type: Array,
+    required: false,
   },
 });
 
