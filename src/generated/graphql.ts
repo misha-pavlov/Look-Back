@@ -76,6 +76,7 @@ export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  img?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
   posts?: Maybe<Array<Maybe<Post>>>;
   userName?: Maybe<Scalars['String']>;
@@ -209,6 +210,7 @@ export type TagResolvers<ContextType = any, ParentType extends ResolversParentTy
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   _id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  img?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
