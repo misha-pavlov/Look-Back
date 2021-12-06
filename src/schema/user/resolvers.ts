@@ -1,4 +1,5 @@
 import { User } from '../../models/userModel';
+import { MutationResolvers, QueryResolvers } from '../../generated/graphql';
 
 export const resolvers = {
   Query: {
@@ -11,9 +12,9 @@ export const resolvers = {
           console.error(err);
         });
     },
-  },
+  } as QueryResolvers,
   Mutation: {
-    addUser: async (root: any, args: { userName: any; email: any; password: any }) => {
+    addUser: async (root, args) => {
       const { userName, email, password } = args;
       const userObj = new User({
         userName,
@@ -29,5 +30,5 @@ export const resolvers = {
           console.error(err);
         });
     },
-  },
+  } as MutationResolvers,
 };

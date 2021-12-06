@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,13 @@
     "graphql": "^15.7.2",
     "http": "^0.0.1-security",
     "mongoose": "^6.0.13",
-    "typescript": "^4.5.2",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.2"
   },
   "devDependencies": {
-    "prettier": "^2.5.0"
+    "@graphql-codegen/cli": "2.3.0",
+    "prettier": "^2.5.0",
+    "@graphql-codegen/typescript": "2.4.1",
+    "@graphql-codegen/typescript-resolvers": "2.4.2"
   }
 }
