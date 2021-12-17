@@ -26,12 +26,12 @@ export const PostsSchema = gql`
     title: String!
   }
 
-  type Query {
+  extend type Query {
     posts: [Posts!]!
     getUserPosts(userId: String!): [Posts!]!
   }
 
-  type Mutation {
+  extend type Mutation {
     addPost(userId: String!, title: String!, img: String!, tags: [TagInput]!): Posts!
   }
 `;

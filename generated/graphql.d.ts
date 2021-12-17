@@ -85,6 +85,7 @@ export type Tag = {
 };
 
 export type TagInput = {
+  _id: Scalars['String'];
   title: Scalars['String'];
 };
 
