@@ -17,7 +17,7 @@ async function startServer() {
   await startApolloServer(app);
   const server = http.createServer(app);
   server.listen(PORT, function () {
-    console.log(`🚀 Server started at port ${PORT}`);
+    console.log(`🥶 Server started at port ${PORT} 🥶`);
   });
 }
 

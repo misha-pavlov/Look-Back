@@ -15,10 +15,26 @@ export type Scalars = {
   Date: any;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  _id: Scalars['String'];
+  title: Scalars['String'];
+  user: User;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addPost: Posts;
   addUser: User;
   dummy?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationAddPostArgs = {
+  img: Scalars['String'];
+  tags: Array<InputMaybe<TagInput>>;
+  title: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -28,10 +44,22 @@ export type MutationAddUserArgs = {
   userName: Scalars['String'];
 };
 
+export type Posts = {
+  __typename?: 'Posts';
+  _id: Scalars['String'];
+  comments: Array<Maybe<Comment>>;
+  createdByUserId: Scalars['String'];
+  img: Scalars['String'];
+  tags: Array<Maybe<Tag>>;
+  title: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   dummy?: Maybe<Scalars['Boolean']>;
   getUser: User;
+  getUserPosts: Array<Posts>;
+  posts: Array<Posts>;
   users: Array<User>;
 };
 
@@ -40,18 +68,33 @@ export type QueryGetUserArgs = {
   userId: Scalars['String'];
 };
 
+
+export type QueryGetUserPostsArgs = {
+  userId: Scalars['String'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   dummy?: Maybe<Scalars['Boolean']>;
 };
 
+export type Tag = {
+  __typename?: 'Tag';
+  _id: Scalars['String'];
+  title: Scalars['String'];
+};
+
+export type TagInput = {
+  title: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
-  _id?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
+  _id: Scalars['String'];
+  email: Scalars['String'];
   img?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  userName: Scalars['String'];
 };
 
 
@@ -124,23 +167,38 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Posts: ResolverTypeWrapper<Posts>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Subscription: ResolverTypeWrapper<{}>;
+  Tag: ResolverTypeWrapper<Tag>;
+  TagInput: TagInput;
   User: ResolverTypeWrapper<User>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  Comment: Comment;
   Date: Scalars['Date'];
   Mutation: {};
+  Posts: Posts;
   Query: {};
   String: Scalars['String'];
   Subscription: {};
+  Tag: Tag;
+  TagInput: TagInput;
   User: User;
+};
+
+export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -148,13 +206,26 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+};
+
+export type PostsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Posts'] = ResolversParentTypes['Posts']> = {
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  comments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
+  createdByUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  img?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
+  getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
+  posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
@@ -162,20 +233,29 @@ export type SubscriptionResolvers<ContextType = any, ParentType extends Resolver
   dummy?: SubscriptionResolver<Maybe<ResolversTypes['Boolean']>, "dummy", ParentType, ContextType>;
 };
 
+export type TagResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  _id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   img?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
+  Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
+  Posts?: PostsResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  Tag?: TagResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

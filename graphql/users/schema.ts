@@ -2,11 +2,11 @@ import gql from 'graphql-tag';
 
 const UsersSchema = gql`
   type User {
-    _id: String
-    userName: String
+    _id: String!
+    userName: String!
     img: String
-    email: String
-    password: String
+    email: String!
+    password: String!
   }
 
   extend type Query {
