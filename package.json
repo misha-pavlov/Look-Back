@@ -2,9 +2,9 @@
   "name": "look-back",
   "version": "0.0.1",
   "description": "",
-  "main": "server.ts",
+  "main": "index.ts",
   "scripts": {
-    "dev": "ts-node-dev src/server.ts",
+    "dev": "ts-node-dev ./index.ts",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
@@ -23,8 +23,10 @@
     "@types/uuid": "^8.3.3",
     "apollo-server": "^3.5.0",
     "apollo-server-core": "^3.5.0",
-    "express": "^4.17.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
     "graphql": "^15.7.2",
+    "graphql-tag": "^2.12.6",
     "http": "^0.0.1-security",
     "mongoose": "^6.0.13",
     "ts-node-dev": "^1.1.8",
