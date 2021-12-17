@@ -26,7 +26,6 @@ export const resolvers = {
         email,
         password,
         img: '',
-        posts: [],
       });
       return userObj
         .save()

@@ -13,7 +13,7 @@ export const resolvers = {
           console.error(err);
         });
     },
-    getPostsForUser: async (root, args) => {
+    getUserPosts: async (root, args) => {
       const { userId } = args;
       const result = await Posts.find({ createdByUserId: userId });
       return result;
@@ -22,6 +22,10 @@ export const resolvers = {
   Mutation: {
     addPost: async (root, args) => {
       const { userId, img, title, tags } = args;
+      console.log('userId = ', userId);
+      console.log('img = ', img);
+      console.log('title = ', title);
+      console.log('tags = ', tags);
       const postsObj = new Posts({
         _id: uuidv4(),
         title,

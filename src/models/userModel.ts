@@ -22,10 +22,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  posts: {
-    type: Array,
-    required: false,
-  },
 });
 
 export const User = mongoose.model('User', UserSchema);

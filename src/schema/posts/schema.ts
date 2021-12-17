@@ -27,7 +27,7 @@ export const schema = gql`
 
   type Query {
     posts: [Posts]
-    getPostsForUser(userId: String): [Posts]
+    getUserPosts(userId: String): [Posts]
   }
 
   type Mutation {
