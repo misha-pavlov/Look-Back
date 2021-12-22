@@ -7,6 +7,9 @@ const UsersSchema = gql`
     img: String
     email: String!
     password: String!
+    firstName: String
+    lastName: String
+    description: String
   }
 
   extend type Query {
@@ -16,6 +19,7 @@ const UsersSchema = gql`
 
   extend type Mutation {
     addUser(userName: String!, email: String!, password: String!): User!
+    setDesc(userId: String!, newDesc: String!): User!
   }
 `;
 

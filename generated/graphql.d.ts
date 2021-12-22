@@ -27,6 +27,7 @@ export type Mutation = {
   addPost: Posts;
   addUser: User;
   dummy?: Maybe<Scalars['Boolean']>;
+  setDesc: User;
 };
 
 
@@ -42,6 +43,12 @@ export type MutationAddUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   userName: Scalars['String'];
+};
+
+
+export type MutationSetDescArgs = {
+  newDesc: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type Posts = {
@@ -92,8 +99,11 @@ export type TagInput = {
 export type User = {
   __typename?: 'User';
   _id: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
   img?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   password: Scalars['String'];
   userName: Scalars['String'];
 };
@@ -210,6 +220,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  setDesc?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSetDescArgs, 'newDesc' | 'userId'>>;
 };
 
 export type PostsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Posts'] = ResolversParentTypes['Posts']> = {
@@ -242,8 +253,11 @@ export type TagResolvers<ContextType = any, ParentType extends ResolversParentTy
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   img?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   userName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

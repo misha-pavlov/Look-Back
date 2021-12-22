@@ -27,6 +27,18 @@ export const UsersMutations: MutationResolvers = {
       email,
       password,
       img: '',
+      firstName: '',
+      lastName: '',
+      description: '',
     });
+  },
+
+  async setDesc(root, args) {
+    const { userId, newDesc } = args;
+    const updatedUser = await Users.findOneAndUpdate({ _id: userId }, { description: newDesc });
+    if (!updatedUser) {
+      throw new Error('User not found!');
+    }
+    return updatedUser;
   },
 };

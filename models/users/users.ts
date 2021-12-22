@@ -6,6 +6,9 @@ export interface UserDocument {
   img?: string;
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  description: string;
 }
 
 interface UserModel extends mongoose.Model<UserDocument> {}
@@ -15,6 +18,9 @@ const UserSchema = new mongoose.Schema({
   img: String,
   email: { type: String, required: true },
   password: { type: String, required: true },
+  firstName: String,
+  lastName: String,
+  description: String,
 });
 
 const Users = mongoose.model<UserDocument, UserModel>('Users', UserSchema);
