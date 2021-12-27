@@ -10,6 +10,8 @@ const UsersSchema = gql`
     firstName: String
     lastName: String
     description: String
+    followers: [String!]
+    following: [String!]
   }
 
   extend type Query {

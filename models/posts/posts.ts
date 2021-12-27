@@ -24,6 +24,7 @@ export interface PostsDocument {
 interface PostsModel extends mongoose.Model<PostsDocument> {}
 
 const PostsSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
   title: { type: String, required: true },
   img: { type: String, required: true },
   tags: { type: Array, required: true },
