@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { MutationResolvers, QueryResolvers } from '../../generated/graphql';
 import Posts from '../../models/posts/posts';
 
@@ -14,11 +15,14 @@ export const PostsQueries: QueryResolvers = {
 export const PostsMutations: MutationResolvers = {
   async addPost(root, args) {
     const { userId, img, title, tags } = args;
+    const time = Date.now();
     return Posts.create({
+      _id: v4(),
       title,
       img,
       tags,
       comments: [],
+      time,
       createdByUserId: userId,
     });
   },

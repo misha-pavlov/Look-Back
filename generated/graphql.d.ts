@@ -58,6 +58,7 @@ export type Posts = {
   createdByUserId: Scalars['String'];
   img: Scalars['String'];
   tags: Array<Maybe<Tag>>;
+  time: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -231,6 +232,7 @@ export type PostsResolvers<ContextType = any, ParentType extends ResolversParent
   createdByUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   img?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
+  time?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

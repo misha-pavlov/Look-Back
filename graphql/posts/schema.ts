@@ -7,6 +7,7 @@ export const PostsSchema = gql`
     img: String!
     tags: [Tag]!
     comments: [Comment]!
+    time: String
     createdByUserId: String!
   }
 

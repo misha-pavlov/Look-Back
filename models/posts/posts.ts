@@ -18,6 +18,7 @@ export interface PostsDocument {
   img: string;
   tags: [Tags];
   comments: [Comments];
+  time: string;
   createdByUserId: string;
 }
 
@@ -29,6 +30,7 @@ const PostsSchema = new mongoose.Schema({
   img: { type: String, required: true },
   tags: { type: Array, required: true },
   comments: { type: Array, required: true },
+  time: { type: String, required: true },
   createdByUserId: { type: String, required: true },
 });
 
