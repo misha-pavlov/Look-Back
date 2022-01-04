@@ -24,10 +24,18 @@ export type Comment = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addComment: Posts;
   addPost: Posts;
   addUser: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
+};
+
+
+export type MutationAddCommentArgs = {
+  postId: Scalars['String'];
+  title: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -58,7 +66,7 @@ export type Posts = {
   createdByUserId: Scalars['String'];
   img: Scalars['String'];
   tags: Array<Maybe<Tag>>;
-  time: Scalars['String'];
+  time?: Maybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -220,6 +228,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addComment?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'postId' | 'title' | 'userId'>>;
   addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
@@ -232,7 +241,7 @@ export type PostsResolvers<ContextType = any, ParentType extends ResolversParent
   createdByUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   img?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
-  time?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

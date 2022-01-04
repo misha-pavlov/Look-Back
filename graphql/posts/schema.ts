@@ -34,5 +34,6 @@ export const PostsSchema = gql`
 
   extend type Mutation {
     addPost(userId: String!, title: String!, img: String!, tags: [TagInput]!): Posts!
+    addComment(title: String!, userId: String!, postId: String!): Posts!
   }
 `;
