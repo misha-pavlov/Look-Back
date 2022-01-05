@@ -16,6 +16,7 @@ export interface UserDocument {
 interface UserModel extends mongoose.Model<UserDocument> {}
 
 const UserSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
   userName: { type: String, required: true },
   img: String,
   email: { type: String, required: true },

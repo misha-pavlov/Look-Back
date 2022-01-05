@@ -1,10 +1,12 @@
-import { MutationResolvers, QueryResolvers } from '../../generated/graphql';
-import Users from '../../models/users/users';
+import { v4 } from 'uuid';
+import { MutationResolvers, QueryResolvers, User } from '../../generated/graphql';
+import Users, { UserDocument } from '../../models/users/users';
 
 export const UsersQueries: QueryResolvers = {
   async users() {
     return Users.find();
   },
+
   async getUser(root, args) {
     const { userId } = args;
     const user = await Users.findOne({ _id: userId });
@@ -12,6 +14,32 @@ export const UsersQueries: QueryResolvers = {
       throw new Error('User not found!');
     }
     return user;
+  },
+
+  async getFollowers(root, args) {
+    const { userId } = args;
+    const user = await Users.findOne({ _id: userId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    return user.followers.map(u => {
+      return Users.findOne({ _id: u });
+    }) as unknown as [User];
+  },
+
+  async getFollowing(root, args) {
+    const { userId } = args;
+    const user = await Users.findOne({ _id: userId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    return user.following.map(u => {
+      return Users.findOne({ _id: u });
+    }) as unknown as [User];
   },
 };
 
@@ -23,6 +51,7 @@ export const UsersMutations: MutationResolvers = {
       throw new Error('User is exists!');
     }
     return Users.create({
+      _id: v4(),
       userName,
       email,
       password,
@@ -40,5 +69,48 @@ export const UsersMutations: MutationResolvers = {
       throw new Error('User not found!');
     }
     return updatedUser;
+  },
+
+  async doFollow(root, args) {
+    const { isFollow, userId, followUserId } = args;
+
+    const user = await Users.findOne({ _id: userId });
+    const followUser = await Users.findOne({ _id: followUserId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    if (!followUser) {
+      throw new Error('Follow User not found!');
+    }
+
+    if (isFollow) {
+      const modifierUser = { $push: { following: followUser._id } };
+      const modifierFollowUser = { $push: { followers: user._id } };
+
+      const updatedPosts = (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
+        returnOriginal: false,
+      })) as UserDocument;
+
+      await Users.findOneAndUpdate({ _id: followUserId }, modifierFollowUser, {
+        returnOriginal: false,
+      });
+
+      return updatedPosts;
+    }
+
+    const modifierUser = { following: user.following.filter(f => f !== followUserId) };
+    const modifierFollowUser = { followers: followUser.followers.filter(f => f !== userId) };
+
+    const updatedPosts = (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
+      returnOriginal: false,
+    })) as UserDocument;
+
+    await Users.findOneAndUpdate({ _id: followUserId }, modifierFollowUser, {
+      returnOriginal: false,
+    });
+
+    return updatedPosts;
   },
 };

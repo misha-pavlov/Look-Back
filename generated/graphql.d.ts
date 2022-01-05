@@ -27,6 +27,7 @@ export type Mutation = {
   addComment: Posts;
   addPost: Posts;
   addUser: User;
+  doFollow: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
 };
@@ -54,6 +55,13 @@ export type MutationAddUserArgs = {
 };
 
 
+export type MutationDoFollowArgs = {
+  followUserId: Scalars['String'];
+  isFollow: Scalars['Boolean'];
+  userId: Scalars['String'];
+};
+
+
 export type MutationSetDescArgs = {
   newDesc: Scalars['String'];
   userId: Scalars['String'];
@@ -73,10 +81,22 @@ export type Posts = {
 export type Query = {
   __typename?: 'Query';
   dummy?: Maybe<Scalars['Boolean']>;
+  getFollowers: Array<User>;
+  getFollowing: Array<User>;
   getUser: User;
   getUserPosts: Array<Posts>;
   posts: Array<Posts>;
   users: Array<User>;
+};
+
+
+export type QueryGetFollowersArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type QueryGetFollowingArgs = {
+  userId: Scalars['String'];
 };
 
 
@@ -231,6 +251,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addComment?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'postId' | 'title' | 'userId'>>;
   addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
+  doFollow?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDoFollowArgs, 'followUserId' | 'isFollow' | 'userId'>>;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   setDesc?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSetDescArgs, 'newDesc' | 'userId'>>;
 };
@@ -248,6 +269,8 @@ export type PostsResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
+  getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
