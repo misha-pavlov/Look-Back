@@ -25,6 +25,14 @@ const UsersSchema = gql`
     addUser(userName: String!, email: String!, password: String!): User!
     setDesc(userId: String!, newDesc: String!): User!
     doFollow(isFollow: Boolean!, userId: String!, followUserId: String!): User!
+    changeUserMainFields(
+      userId: String!
+      userName: String!
+      img: String
+      email: String!
+      firstName: String
+      lastName: String
+    ): User!
   }
 `;
 

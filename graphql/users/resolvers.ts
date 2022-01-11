@@ -113,4 +113,28 @@ export const UsersMutations: MutationResolvers = {
 
     return updatedPosts;
   },
+
+  async changeUserMainFields(root, args) {
+    const { userId, userName, email, firstName, lastName, img } = args;
+
+    const user = await Users.findOne({ _id: userId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    return (await Users.findOneAndUpdate(
+      { _id: userId },
+      {
+        userName,
+        email,
+        firstName: firstName ? firstName : '',
+        lastName: lastName ? lastName : '',
+        img: img ? img : '',
+      },
+      {
+        returnOriginal: false,
+      },
+    )) as UserDocument;
+  },
 };
