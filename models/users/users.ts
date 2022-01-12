@@ -11,6 +11,7 @@ export interface UserDocument {
   description: string;
   followers: Array<string>;
   following: Array<string>;
+  blocked: Array<string>;
 }
 
 interface UserModel extends mongoose.Model<UserDocument> {}
@@ -26,6 +27,7 @@ const UserSchema = new mongoose.Schema({
   description: String,
   followers: Array,
   following: Array,
+  blocked: Array,
 });
 
 const Users = mongoose.model<UserDocument, UserModel>('Users', UserSchema);

@@ -12,6 +12,7 @@ const UsersSchema = gql`
     description: String
     followers: [String!]
     following: [String!]
+    blocked: [String!]
   }
 
   extend type Query {
@@ -19,6 +20,7 @@ const UsersSchema = gql`
     getUser(userId: String!): User!
     getFollowers(userId: String!): [User!]!
     getFollowing(userId: String!): [User!]!
+    getBlocked(userId: String!): [User!]!
   }
 
   extend type Mutation {
@@ -34,6 +36,7 @@ const UsersSchema = gql`
       lastName: String
     ): User!
     changePassword(userId: String!, newPassword: String!): User!
+    doUnblocked(userId: String!, targetUserId: String!): User!
   }
 `;
 

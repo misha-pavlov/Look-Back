@@ -41,6 +41,19 @@ export const UsersQueries: QueryResolvers = {
       return Users.findOne({ _id: u });
     }) as unknown as [User];
   },
+
+  async getBlocked(root, args) {
+    const { userId } = args;
+    const user = await Users.findOne({ _id: userId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    return user.blocked.map(u => {
+      return Users.findOne({ _id: u });
+    }) as unknown as [User];
+  },
 };
 
 export const UsersMutations: MutationResolvers = {
@@ -59,6 +72,9 @@ export const UsersMutations: MutationResolvers = {
       firstName: '',
       lastName: '',
       description: '',
+      followers: [],
+      following: [],
+      blocked: [],
     });
   },
 
@@ -156,5 +172,26 @@ export const UsersMutations: MutationResolvers = {
         returnOriginal: false,
       },
     )) as UserDocument;
+  },
+
+  async doUnblocked(root, args) {
+    const { userId, targetUserId } = args;
+
+    const user = await Users.findOne({ _id: userId });
+    const targetUser = await Users.findOne({ _id: targetUserId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    if (!targetUser) {
+      throw new Error('Target User not found!');
+    }
+
+    const modifierUser = { blocked: user.blocked.filter(f => f !== targetUserId) };
+
+    return (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
+      returnOriginal: false,
+    })) as UserDocument;
   },
 };
