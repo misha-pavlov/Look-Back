@@ -33,6 +33,7 @@ const UsersSchema = gql`
       firstName: String
       lastName: String
     ): User!
+    changePassword(userId: String!, newPassword: String!): User!
   }
 `;
 

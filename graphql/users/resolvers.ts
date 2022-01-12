@@ -137,4 +137,24 @@ export const UsersMutations: MutationResolvers = {
       },
     )) as UserDocument;
   },
+
+  async changePassword(root, args) {
+    const { userId, newPassword } = args;
+
+    const user = await Users.findOne({ _id: userId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    return (await Users.findOneAndUpdate(
+      { _id: userId },
+      {
+        password: newPassword,
+      },
+      {
+        returnOriginal: false,
+      },
+    )) as UserDocument;
+  },
 };
