@@ -37,6 +37,7 @@ const UsersSchema = gql`
     ): User!
     changePassword(userId: String!, newPassword: String!): User!
     doUnblocked(userId: String!, targetUserId: String!): User!
+    block(userId: String!, targetUserId: String!): User!
   }
 `;
 

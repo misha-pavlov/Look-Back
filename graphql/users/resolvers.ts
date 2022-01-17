@@ -105,7 +105,7 @@ export const UsersMutations: MutationResolvers = {
       const modifierUser = { $push: { following: followUser._id } };
       const modifierFollowUser = { $push: { followers: user._id } };
 
-      const updatedPosts = (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
+      const updatedFollow = (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
         returnOriginal: false,
       })) as UserDocument;
 
@@ -113,13 +113,13 @@ export const UsersMutations: MutationResolvers = {
         returnOriginal: false,
       });
 
-      return updatedPosts;
+      return updatedFollow;
     }
 
     const modifierUser = { following: user.following.filter(f => f !== followUserId) };
     const modifierFollowUser = { followers: followUser.followers.filter(f => f !== userId) };
 
-    const updatedPosts = (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
+    const updatedFollow = (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
       returnOriginal: false,
     })) as UserDocument;
 
@@ -127,7 +127,7 @@ export const UsersMutations: MutationResolvers = {
       returnOriginal: false,
     });
 
-    return updatedPosts;
+    return updatedFollow;
   },
 
   async changeUserMainFields(root, args) {
@@ -193,5 +193,45 @@ export const UsersMutations: MutationResolvers = {
     return (await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
       returnOriginal: false,
     })) as UserDocument;
+  },
+
+  async block(root, args) {
+    const { userId, targetUserId } = args;
+
+    const user = await Users.findOne({ _id: userId });
+    const targetUser = await Users.findOne({ _id: targetUserId });
+
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    if (!targetUser) {
+      throw new Error('Target User not found!');
+    }
+
+    const modifierBlockUser = { $push: { blocked: targetUserId } };
+
+    const updatedUser = (await Users.findOneAndUpdate({ _id: userId }, modifierBlockUser, {
+      returnOriginal: false,
+    })) as UserDocument;
+
+    const modifierUser = {
+      following: user.following.filter(f => f !== targetUserId),
+      followers: user.followers.filter(f => f !== targetUserId),
+    };
+    const modifierFollowUser = {
+      followers: targetUser.followers.filter(f => f !== userId),
+      following: targetUser.following.filter(f => f !== userId),
+    };
+
+    await Users.findOneAndUpdate({ _id: userId }, modifierUser, {
+      returnOriginal: false,
+    });
+
+    await Users.findOneAndUpdate({ _id: targetUserId }, modifierFollowUser, {
+      returnOriginal: false,
+    });
+
+    return updatedUser;
   },
 };

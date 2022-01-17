@@ -27,6 +27,7 @@ export type Mutation = {
   addComment: Posts;
   addPost: Posts;
   addUser: User;
+  block: User;
   changePassword: User;
   changeUserMainFields: User;
   doFollow: User;
@@ -55,6 +56,12 @@ export type MutationAddUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   userName: Scalars['String'];
+};
+
+
+export type MutationBlockArgs = {
+  targetUserId: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -283,6 +290,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addComment?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'postId' | 'title' | 'userId'>>;
   addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
+  block?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationBlockArgs, 'targetUserId' | 'userId'>>;
   changePassword?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationChangePasswordArgs, 'newPassword' | 'userId'>>;
   changeUserMainFields?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationChangeUserMainFieldsArgs, 'email' | 'userId' | 'userName'>>;
   doFollow?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDoFollowArgs, 'followUserId' | 'isFollow' | 'userId'>>;
