@@ -30,6 +30,7 @@ export const PostsSchema = gql`
   extend type Query {
     posts: [Posts!]!
     getUserPosts(userId: String!): [Posts!]!
+    getPostsForUser(userId: String!): [Posts!]!
   }
 
   extend type Mutation {

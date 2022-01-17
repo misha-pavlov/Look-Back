@@ -116,6 +116,7 @@ export type Query = {
   getBlocked: Array<User>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
+  getPostsForUser: Array<Posts>;
   getUser: User;
   getUserPosts: Array<Posts>;
   posts: Array<Posts>;
@@ -134,6 +135,11 @@ export type QueryGetFollowersArgs = {
 
 
 export type QueryGetFollowingArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type QueryGetPostsForUserArgs = {
   userId: Scalars['String'];
 };
 
@@ -315,6 +321,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getBlocked?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetBlockedArgs, 'userId'>>;
   getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
   getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;
+  getPostsForUser?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsForUserArgs, 'userId'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
