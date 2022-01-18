@@ -140,6 +140,8 @@ export type QueryGetFollowingArgs = {
 
 
 export type QueryGetPostsForUserArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
   userId: Scalars['String'];
 };
 
@@ -256,6 +258,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Posts: ResolverTypeWrapper<Posts>;
   Query: ResolverTypeWrapper<{}>;
@@ -271,6 +274,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Comment: Comment;
   Date: Scalars['Date'];
+  Int: Scalars['Int'];
   Mutation: {};
   Posts: Posts;
   Query: {};
@@ -321,7 +325,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getBlocked?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetBlockedArgs, 'userId'>>;
   getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
   getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;
-  getPostsForUser?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsForUserArgs, 'userId'>>;
+  getPostsForUser?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsForUserArgs, 'limit' | 'skip' | 'userId'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;

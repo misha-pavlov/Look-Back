@@ -12,7 +12,7 @@ export const PostsQueries: QueryResolvers = {
     return Posts.find({ createdByUserId: userId });
   },
   async getPostsForUser(root, args) {
-    const { userId } = args;
+    const { userId, skip, limit } = args;
 
     const user = await Users.findOne({ _id: userId });
 
@@ -21,7 +21,9 @@ export const PostsQueries: QueryResolvers = {
     }
 
     const following = user.following;
-    return Posts.find({ $in: { createdByUserId: following } }, {}, { sort: { time: -1 } });
+    return Posts.find({ $in: { createdByUserId: following } }, {}, { sort: { time: -1 } })
+      .skip(skip)
+      .limit(limit);
   },
 };
 
