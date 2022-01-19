@@ -25,7 +25,7 @@ export const PostsQueries: QueryResolvers = {
       .skip(skip)
       .limit(limit);
   },
-  async getAllPosts(root, args) {
+  async getAllPosts() {
     return Posts.find({}, {}, { sort: { time: -1 } });
   },
 };
