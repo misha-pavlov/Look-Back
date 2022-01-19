@@ -1,4 +1,5 @@
 import { gql } from 'apollo-server';
+import { QUERY_LIMITS } from '../limits';
 
 export const PostsSchema = gql`
   type Posts {
@@ -30,7 +31,8 @@ export const PostsSchema = gql`
   extend type Query {
     posts: [Posts!]!
     getUserPosts(userId: String!): [Posts!]!
-    getPostsForUser(userId: String!, skip: Int = 5, limit: Int = 5): [Posts!]!
+    getPostsForUser(userId: String!, skip: Int = 0, limit: Int = ${QUERY_LIMITS.POSTS_FOR_USER}): [Posts!]!
+    getAllPosts: [Posts!]!
   }
 
   extend type Mutation {

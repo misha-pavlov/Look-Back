@@ -113,6 +113,7 @@ export type Posts = {
 export type Query = {
   __typename?: 'Query';
   dummy?: Maybe<Scalars['Boolean']>;
+  getAllPosts: Array<Posts>;
   getBlocked: Array<User>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
@@ -322,6 +323,7 @@ export type PostsResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  getAllPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
   getBlocked?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetBlockedArgs, 'userId'>>;
   getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
   getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;

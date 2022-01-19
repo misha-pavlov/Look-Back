@@ -844,6 +844,30 @@
             "deprecationReason": null
           },
           {
+            "name": "getAllPosts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Posts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getBlocked",
             "description": null,
             "args": [
@@ -990,7 +1014,7 @@
                   "name": "Int",
                   "ofType": null
                 },
-                "defaultValue": "5",
+                "defaultValue": "0",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
