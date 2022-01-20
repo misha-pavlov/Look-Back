@@ -21,6 +21,7 @@ const UsersSchema = gql`
     getFollowers(userId: String!): [User!]!
     getFollowing(userId: String!): [User!]!
     getBlocked(userId: String!): [User!]!
+    searchUser(userName: String!): [User!]!
   }
 
   extend type Mutation {

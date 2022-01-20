@@ -7,10 +7,12 @@ export const PostsQueries: QueryResolvers = {
   async posts() {
     return Posts.find();
   },
+
   async getUserPosts(root, args) {
     const { userId } = args;
     return Posts.find({ createdByUserId: userId });
   },
+
   async getPostsForUser(root, args) {
     const { userId, skip, limit } = args;
 
@@ -25,8 +27,21 @@ export const PostsQueries: QueryResolvers = {
       .skip(skip)
       .limit(limit);
   },
+
   async getAllPosts() {
     return Posts.find({}, {}, { sort: { time: -1 } });
+  },
+
+  async getPostsByTitle(root, args) {
+    const { title } = args;
+    const regex = new RegExp(title.trim().split(/\s+/).join('|'));
+    return Posts.find({ title: { $regex: regex, $options: 'i' } });
+  },
+
+  async getPostsByTag(root, args) {
+    const { tag } = args;
+    const regex = new RegExp(tag.trim().split(/\s+/).join('|'));
+    return Posts.find({ 'tags.title': { $regex: regex, $options: 'i' } });
   },
 };
 

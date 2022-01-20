@@ -54,6 +54,12 @@ export const UsersQueries: QueryResolvers = {
       return Users.findOne({ _id: u });
     }) as unknown as [User];
   },
+
+  async searchUser(root, args) {
+    const { userName } = args;
+    const regex = new RegExp(userName.trim().split(/\s+/).join('|'));
+    return Users.find({ userName: { $regex: regex, $options: 'i' } });
+  },
 };
 
 export const UsersMutations: MutationResolvers = {

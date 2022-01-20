@@ -33,6 +33,8 @@ export const PostsSchema = gql`
     getUserPosts(userId: String!): [Posts!]!
     getPostsForUser(userId: String!, skip: Int = 0, limit: Int = ${QUERY_LIMITS.POSTS_FOR_USER}): [Posts!]!
     getAllPosts: [Posts!]!
+    getPostsByTitle(title: String!): [Posts!]!
+    getPostsByTag(tag: String!): [Posts!]!
   }
 
   extend type Mutation {

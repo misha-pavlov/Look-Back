@@ -117,10 +117,13 @@ export type Query = {
   getBlocked: Array<User>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
+  getPostsByTag: Array<Posts>;
+  getPostsByTitle: Array<Posts>;
   getPostsForUser: Array<Posts>;
   getUser: User;
   getUserPosts: Array<Posts>;
   posts: Array<Posts>;
+  searchUser: Array<User>;
   users: Array<User>;
 };
 
@@ -140,6 +143,16 @@ export type QueryGetFollowingArgs = {
 };
 
 
+export type QueryGetPostsByTagArgs = {
+  tag: Scalars['String'];
+};
+
+
+export type QueryGetPostsByTitleArgs = {
+  title: Scalars['String'];
+};
+
+
 export type QueryGetPostsForUserArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
@@ -154,6 +167,11 @@ export type QueryGetUserArgs = {
 
 export type QueryGetUserPostsArgs = {
   userId: Scalars['String'];
+};
+
+
+export type QuerySearchUserArgs = {
+  userName: Scalars['String'];
 };
 
 export type Subscription = {
@@ -327,10 +345,13 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getBlocked?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetBlockedArgs, 'userId'>>;
   getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
   getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;
+  getPostsByTag?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsByTagArgs, 'tag'>>;
+  getPostsByTitle?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsByTitleArgs, 'title'>>;
   getPostsForUser?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsForUserArgs, 'limit' | 'skip' | 'userId'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
+  searchUser?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QuerySearchUserArgs, 'userName'>>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
