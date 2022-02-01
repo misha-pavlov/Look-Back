@@ -11,7 +11,7 @@ export const ActivityQueries: QueryResolvers = {
   async hasUnreadActivities(root, args) {
     const { userId } = args;
     const activities = await Activities.countDocuments({ targetUserId: userId, isRead: false });
-    return activities !== 0;
+    return activities > 0;
   },
 };
 
