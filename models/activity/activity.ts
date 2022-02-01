@@ -7,6 +7,7 @@ export interface ActivityDocument {
   commentText?: string;
   postImage?: string;
   date: string;
+  isRead?: boolean;
 }
 
 interface ActivityModel extends mongoose.Model<ActivityDocument> {}
@@ -18,6 +19,7 @@ const ActivitySchema = new mongoose.Schema({
   commentText: String,
   postImage: String,
   date: { type: String, required: true },
+  isRead: Boolean,
 });
 
 const Activities = mongoose.model<ActivityDocument, ActivityModel>('Activity', ActivitySchema);

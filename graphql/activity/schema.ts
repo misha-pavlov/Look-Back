@@ -8,13 +8,16 @@ export const ActivitySchema = gql`
     commentText: String
     postImage: String
     date: String!
+    isRead: Boolean
   }
 
   extend type Query {
     getUserActivities(userId: String!): [Activity!]!
+    hasUnreadActivities(userId: String!): Boolean!
   }
 
   extend type Mutation {
     addUserActivity(actionUserId: String!, targetUserId: String!, commentText: String, postImage: String): Activity!
+    setUnreadActivity(activityId: String!): Activity!
   }
 `;

@@ -7,6 +7,12 @@ export const ActivityQueries: QueryResolvers = {
     const { userId } = args;
     return Activities.find({ targetUserId: userId }, {}, { sort: { date: -1 } });
   },
+
+  async hasUnreadActivities(root, args) {
+    const { userId } = args;
+    const activities = await Activities.countDocuments({ targetUserId: userId, isRead: false });
+    return activities !== 0;
+  },
 };
 
 export const ActivityMutations: MutationResolvers = {
@@ -20,6 +26,16 @@ export const ActivityMutations: MutationResolvers = {
       commentText,
       postImage,
       date,
+      isRead: false,
     });
+  },
+
+  async setUnreadActivity(root, args) {
+    const { activityId } = args;
+    const updatedActivity = await Activities.findOneAndUpdate({ _id: activityId }, { isRead: true });
+    if (!updatedActivity) {
+      throw new Error('Activity is not exist');
+    }
+    return updatedActivity;
   },
 };
