@@ -35,6 +35,7 @@ export const PostsSchema = gql`
     getAllPosts: [Posts!]!
     getPostsByTitle(title: String!): [Posts!]!
     getPostsByTag(tag: String!): [Posts!]!
+    getPost(postId: String!): Posts!
   }
 
   extend type Mutation {

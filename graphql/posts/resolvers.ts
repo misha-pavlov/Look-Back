@@ -43,6 +43,15 @@ export const PostsQueries: QueryResolvers = {
     const regex = new RegExp(tag.trim().split(/\s+/).join('|'));
     return Posts.find({ 'tags.title': { $regex: regex, $options: 'i' } });
   },
+
+  async getPost(root, args) {
+    const { postId } = args;
+    const post = await Posts.findOne({ _id: postId });
+    if (!post) {
+      throw new Error('Post not found!');
+    }
+    return post;
+  },
 };
 
 export const PostsMutations: MutationResolvers = {

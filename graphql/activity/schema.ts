@@ -6,7 +6,7 @@ export const ActivitySchema = gql`
     actionUserId: String!
     targetUserId: String!
     commentText: String
-    postImage: String
+    postId: String
     date: String!
     isRead: Boolean
   }
@@ -17,7 +17,7 @@ export const ActivitySchema = gql`
   }
 
   extend type Mutation {
-    addUserActivity(actionUserId: String!, targetUserId: String!, commentText: String, postImage: String): Activity!
+    addUserActivity(actionUserId: String!, targetUserId: String!, commentText: String, postId: String): Activity!
     setUnreadActivity(activityId: String!): Activity!
   }
 `;

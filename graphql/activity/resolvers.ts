@@ -17,14 +17,14 @@ export const ActivityQueries: QueryResolvers = {
 
 export const ActivityMutations: MutationResolvers = {
   async addUserActivity(root, args) {
-    const { actionUserId, targetUserId, commentText, postImage } = args;
+    const { actionUserId, targetUserId, commentText, postId } = args;
     const date = Date.now();
     return Activities.create({
       _id: v4(),
       actionUserId,
       targetUserId,
       commentText,
-      postImage,
+      postId,
       date,
       isRead: false,
     });

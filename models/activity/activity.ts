@@ -5,7 +5,7 @@ export interface ActivityDocument {
   actionUserId: string;
   targetUserId: string;
   commentText?: string;
-  postImage?: string;
+  postId?: string;
   date: string;
   isRead?: boolean;
 }
@@ -17,7 +17,7 @@ const ActivitySchema = new mongoose.Schema({
   actionUserId: { type: String, required: true },
   targetUserId: { type: String, required: true },
   commentText: String,
-  postImage: String,
+  postId: String,
   date: { type: String, required: true },
   isRead: Boolean,
 });
