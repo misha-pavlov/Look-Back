@@ -1,0 +1,20 @@
+import { gql } from 'apollo-server';
+
+export const ChatsSchema = gql`
+  type Chats {
+    _id: String!
+    title: String!
+    members: [String!]!
+    lastMessage: String
+    lastMessageTime: String
+    groupImage: String!
+  }
+
+  extend type Query {
+    getUserChats(userId: String!): [Chats!]!
+  }
+
+  extend type Mutation {
+    addChat(title: String!, members: [String!]!, groupImage: String!): Chats!
+  }
+`;

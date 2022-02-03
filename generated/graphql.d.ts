@@ -26,6 +26,16 @@ export type Activity = {
   targetUserId: Scalars['String'];
 };
 
+export type Chats = {
+  __typename?: 'Chats';
+  _id: Scalars['String'];
+  groupImage: Scalars['String'];
+  lastMessage?: Maybe<Scalars['String']>;
+  lastMessageTime?: Maybe<Scalars['String']>;
+  members: Array<Scalars['String']>;
+  title: Scalars['String'];
+};
+
 export type Comment = {
   __typename?: 'Comment';
   _id: Scalars['String'];
@@ -35,6 +45,7 @@ export type Comment = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addChat: Chats;
   addComment: Posts;
   addPost: Posts;
   addUser: User;
@@ -47,6 +58,13 @@ export type Mutation = {
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
   setUnreadActivity: Activity;
+};
+
+
+export type MutationAddChatArgs = {
+  groupImage: Scalars['String'];
+  members: Array<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 
@@ -149,6 +167,7 @@ export type Query = {
   getPostsForUser: Array<Posts>;
   getUser: User;
   getUserActivities: Array<Activity>;
+  getUserChats: Array<Chats>;
   getUserPosts: Array<Posts>;
   hasUnreadActivities: Scalars['Boolean'];
   posts: Array<Posts>;
@@ -200,6 +219,11 @@ export type QueryGetUserArgs = {
 
 
 export type QueryGetUserActivitiesArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type QueryGetUserChatsArgs = {
   userId: Scalars['String'];
 };
 
@@ -320,6 +344,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Activity: ResolverTypeWrapper<Activity>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Chats: ResolverTypeWrapper<Chats>;
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -337,6 +362,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Activity: Activity;
   Boolean: Scalars['Boolean'];
+  Chats: Chats;
   Comment: Comment;
   Date: Scalars['Date'];
   Int: Scalars['Int'];
@@ -361,6 +387,16 @@ export type ActivityResolvers<ContextType = any, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ChatsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Chats'] = ResolversParentTypes['Chats']> = {
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  groupImage?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  lastMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lastMessageTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  members?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -373,6 +409,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addChat?: Resolver<ResolversTypes['Chats'], ParentType, ContextType, RequireFields<MutationAddChatArgs, 'groupImage' | 'members' | 'title'>>;
   addComment?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'postId' | 'title' | 'userId'>>;
   addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
@@ -410,6 +447,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getPostsForUser?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsForUserArgs, 'limit' | 'skip' | 'userId'>>;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUserActivities?: Resolver<Array<ResolversTypes['Activity']>, ParentType, ContextType, RequireFields<QueryGetUserActivitiesArgs, 'userId'>>;
+  getUserChats?: Resolver<Array<ResolversTypes['Chats']>, ParentType, ContextType, RequireFields<QueryGetUserChatsArgs, 'userId'>>;
   getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
   hasUnreadActivities?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasUnreadActivitiesArgs, 'userId'>>;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
@@ -444,6 +482,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Activity?: ActivityResolvers<ContextType>;
+  Chats?: ChatsResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
