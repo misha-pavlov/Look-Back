@@ -12,6 +12,7 @@ export const ChatsSchema = gql`
 
   extend type Query {
     getUserChats(userId: String!): [Chats!]!
+    searchChat(title: String!): [Chats!]!
   }
 
   extend type Mutation {

@@ -14,6 +14,12 @@ export const ChatsQueries: QueryResolvers = {
 
     return Chats.find({ $in: { members: userId } }, {}, { sort: { lastMessageTime: -1 } });
   },
+
+  async searchChat(root, args) {
+    const { title } = args;
+    const regex = new RegExp(title.trim().split(/\s+/).join('|'));
+    return Chats.find({ title: { $regex: regex, $options: 'i' } });
+  },
 };
 
 export const ChatsMutations: MutationResolvers = {

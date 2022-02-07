@@ -171,6 +171,7 @@ export type Query = {
   getUserPosts: Array<Posts>;
   hasUnreadActivities: Scalars['Boolean'];
   posts: Array<Posts>;
+  searchChat: Array<Chats>;
   searchUser: Array<User>;
   users: Array<User>;
 };
@@ -235,6 +236,11 @@ export type QueryGetUserPostsArgs = {
 
 export type QueryHasUnreadActivitiesArgs = {
   userId: Scalars['String'];
+};
+
+
+export type QuerySearchChatArgs = {
+  title: Scalars['String'];
 };
 
 
@@ -451,6 +457,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'userId'>>;
   hasUnreadActivities?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasUnreadActivitiesArgs, 'userId'>>;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
+  searchChat?: Resolver<Array<ResolversTypes['Chats']>, ParentType, ContextType, RequireFields<QuerySearchChatArgs, 'title'>>;
   searchUser?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QuerySearchUserArgs, 'userName'>>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
