@@ -69,6 +69,7 @@ export type Mutation = {
   doUnblocked: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
+  setReadBy: Scalars['Boolean'];
   setUnreadActivity: Activity;
 };
 
@@ -159,6 +160,12 @@ export type MutationDoUnblockedArgs = {
 
 export type MutationSetDescArgs = {
   newDesc: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
+export type MutationSetReadByArgs = {
+  messageId: Scalars['String'];
   userId: Scalars['String'];
 };
 
@@ -471,6 +478,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   doUnblocked?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDoUnblockedArgs, 'targetUserId' | 'userId'>>;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   setDesc?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSetDescArgs, 'newDesc' | 'userId'>>;
+  setReadBy?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSetReadByArgs, 'messageId' | 'userId'>>;
   setUnreadActivity?: Resolver<ResolversTypes['Activity'], ParentType, ContextType, RequireFields<MutationSetUnreadActivityArgs, 'activityId'>>;
 };
 

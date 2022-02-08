@@ -37,7 +37,7 @@ export const ChatsMutations: MutationResolvers = {
       _id: v4(),
       title,
       members,
-      lastMessage: 'Mock last message need to get from messages when will be',
+      lastMessage: '',
       lastMessageTime,
       groupImage,
       readBy: members,

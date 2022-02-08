@@ -15,5 +15,6 @@ export const MessagesSchema = gql`
 
   extend type Mutation {
     addMessage(body: String!, userSentId: String!, groupId: String!): Messages!
+    setReadBy(userId: String!, messageId: String!): Boolean!
   }
 `;
