@@ -14,6 +14,7 @@ export const ChatsSchema = gql`
   extend type Query {
     getUserChats(userId: String!): [Chats!]!
     searchChat(title: String!): [Chats!]!
+    hasUnreadChats(userId: String!): Boolean!
   }
 
   extend type Mutation {

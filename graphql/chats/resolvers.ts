@@ -12,13 +12,25 @@ export const ChatsQueries: QueryResolvers = {
       throw new Error('User not found!');
     }
 
-    return Chats.find({ $in: { members: userId } }, {}, { sort: { lastMessageTime: -1 } });
+    return Chats.find({ members: { $in: [userId] } }, {}, { sort: { lastMessageTime: -1 } });
   },
 
   async searchChat(root, args) {
     const { title } = args;
     const regex = new RegExp(title.trim().split(/\s+/).join('|'));
     return Chats.find({ title: { $regex: regex, $options: 'i' } });
+  },
+
+  async hasUnreadChats(root, args) {
+    const { userId } = args;
+
+    const user = await Users.findOne({ _id: userId });
+    if (!user) {
+      throw new Error('User not found!');
+    }
+
+    const unreadCount = await Chats.countDocuments({ members: { $in: [userId] }, readBy: { $nin: [userId] } });
+    return unreadCount > 0;
   },
 };
 
