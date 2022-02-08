@@ -44,10 +44,20 @@ export type Comment = {
   user: User;
 };
 
+export type Messages = {
+  __typename?: 'Messages';
+  _id: Scalars['String'];
+  body: Scalars['String'];
+  groupId: Scalars['String'];
+  readBy: Array<Scalars['String']>;
+  userSentId: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addChat: Chats;
   addComment: Posts;
+  addMessage: Messages;
   addPost: Posts;
   addUser: User;
   addUserActivity: Activity;
@@ -74,6 +84,13 @@ export type MutationAddCommentArgs = {
   postId: Scalars['String'];
   title: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type MutationAddMessageArgs = {
+  body: Scalars['String'];
+  groupId: Scalars['String'];
+  userSentId: Scalars['String'];
 };
 
 
@@ -168,6 +185,7 @@ export type Query = {
   getBlocked: Array<User>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
+  getMessagesByGroupId: Array<Messages>;
   getPost: Posts;
   getPostsByTag: Array<Posts>;
   getPostsByTitle: Array<Posts>;
@@ -196,6 +214,11 @@ export type QueryGetFollowersArgs = {
 
 export type QueryGetFollowingArgs = {
   userId: Scalars['String'];
+};
+
+
+export type QueryGetMessagesByGroupIdArgs = {
+  groupId: Scalars['String'];
 };
 
 
@@ -361,6 +384,7 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Messages: ResolverTypeWrapper<Messages>;
   Mutation: ResolverTypeWrapper<{}>;
   Posts: ResolverTypeWrapper<Posts>;
   Query: ResolverTypeWrapper<{}>;
@@ -379,6 +403,7 @@ export type ResolversParentTypes = {
   Comment: Comment;
   Date: Scalars['Date'];
   Int: Scalars['Int'];
+  Messages: Messages;
   Mutation: {};
   Posts: Posts;
   Query: {};
@@ -422,9 +447,19 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
+export type MessagesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Messages'] = ResolversParentTypes['Messages']> = {
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  groupId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  readBy?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  userSentId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addChat?: Resolver<ResolversTypes['Chats'], ParentType, ContextType, RequireFields<MutationAddChatArgs, 'groupImage' | 'members' | 'title'>>;
   addComment?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'postId' | 'title' | 'userId'>>;
+  addMessage?: Resolver<ResolversTypes['Messages'], ParentType, ContextType, RequireFields<MutationAddMessageArgs, 'body' | 'groupId' | 'userSentId'>>;
   addPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'img' | 'tags' | 'title' | 'userId'>>;
   addUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>>;
   addUserActivity?: Resolver<ResolversTypes['Activity'], ParentType, ContextType, RequireFields<MutationAddUserActivityArgs, 'actionUserId' | 'targetUserId'>>;
@@ -456,6 +491,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getBlocked?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetBlockedArgs, 'userId'>>;
   getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
   getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;
+  getMessagesByGroupId?: Resolver<Array<ResolversTypes['Messages']>, ParentType, ContextType, RequireFields<QueryGetMessagesByGroupIdArgs, 'groupId'>>;
   getPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<QueryGetPostArgs, 'postId'>>;
   getPostsByTag?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsByTagArgs, 'tag'>>;
   getPostsByTitle?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType, RequireFields<QueryGetPostsByTitleArgs, 'title'>>;
@@ -501,6 +537,7 @@ export type Resolvers<ContextType = any> = {
   Chats?: ChatsResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  Messages?: MessagesResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Posts?: PostsResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
