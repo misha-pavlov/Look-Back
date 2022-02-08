@@ -33,6 +33,7 @@ export const ChatsMutations: MutationResolvers = {
       lastMessage: 'Mock last message need to get from messages when will be',
       lastMessageTime,
       groupImage,
+      readBy: members,
     });
   },
 };

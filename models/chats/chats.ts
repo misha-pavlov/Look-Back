@@ -7,6 +7,7 @@ export interface ChatsDocument {
   lastMessage: string;
   lastMessageTime: string;
   groupImage: string;
+  readBy: string[];
 }
 
 interface ChatsModel extends mongoose.Model<ChatsDocument> {}
@@ -17,7 +18,8 @@ const ChatsSchema = new mongoose.Schema({
   members: { type: Array, required: true },
   lastMessage: String,
   lastMessageTime: String,
-  groupImage: String,
+  groupImage: { type: String, required: true },
+  readBy: { type: Array, required: true },
 });
 
 const Chats = mongoose.model<ChatsDocument, ChatsModel>('Chats', ChatsSchema);

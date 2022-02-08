@@ -8,6 +8,7 @@ export const ChatsSchema = gql`
     lastMessage: String
     lastMessageTime: String
     groupImage: String!
+    readBy: [String!]!
   }
 
   extend type Query {
