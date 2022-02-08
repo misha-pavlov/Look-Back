@@ -18,5 +18,6 @@ export const ChatsSchema = gql`
 
   extend type Mutation {
     addChat(title: String!, members: [String!]!, groupImage: String!): Chats!
+    deleteChat(chatId: String!): Boolean!
   }
 `;

@@ -26,6 +26,13 @@ export const ChatsMutations: MutationResolvers = {
   async addChat(root, args) {
     const { title, members, groupImage } = args;
     const lastMessageTime = Date.now();
+
+    const chat = await Chats.findOne({ title, members });
+
+    if (chat) {
+      throw new Error('Chat is existing!');
+    }
+
     return Chats.create({
       _id: v4(),
       title,
@@ -35,5 +42,11 @@ export const ChatsMutations: MutationResolvers = {
       groupImage,
       readBy: members,
     });
+  },
+
+  async deleteChat(root, args) {
+    const { chatId } = args;
+    await Chats.deleteOne({ _id: chatId });
+    return false;
   },
 };
