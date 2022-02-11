@@ -65,6 +65,7 @@ export type Mutation = {
   changePassword: User;
   changeUserMainFields: User;
   deleteChat: Scalars['Boolean'];
+  deleteMessage: Scalars['Boolean'];
   doFollow: User;
   doUnblocked: User;
   dummy?: Maybe<Scalars['Boolean']>;
@@ -142,6 +143,11 @@ export type MutationChangeUserMainFieldsArgs = {
 
 export type MutationDeleteChatArgs = {
   chatId: Scalars['String'];
+};
+
+
+export type MutationDeleteMessageArgs = {
+  messageId: Scalars['String'];
 };
 
 
@@ -480,6 +486,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   changePassword?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationChangePasswordArgs, 'newPassword' | 'userId'>>;
   changeUserMainFields?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationChangeUserMainFieldsArgs, 'email' | 'userId' | 'userName'>>;
   deleteChat?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteChatArgs, 'chatId'>>;
+  deleteMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, 'messageId'>>;
   doFollow?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDoFollowArgs, 'followUserId' | 'isFollow' | 'userId'>>;
   doUnblocked?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDoUnblockedArgs, 'targetUserId' | 'userId'>>;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;

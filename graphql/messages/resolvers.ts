@@ -40,4 +40,11 @@ export const MessagesMutations: MutationResolvers = {
 
     return false;
   },
+
+  async deleteMessage(root, args) {
+    const { messageId } = args;
+    console.log('messageId = ', messageId);
+    await Messages.deleteOne({ _id: messageId });
+    return false;
+  },
 };
