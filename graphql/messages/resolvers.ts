@@ -30,11 +30,15 @@ export const MessagesMutations: MutationResolvers = {
 
     if (message) {
       if (message.readBy.includes(userId)) {
+        await Chats.findOneAndUpdate({ _id: message.groupId }, { lastMessage: message.body });
         return false;
       }
 
       await Messages.findOneAndUpdate({ _id: messageId }, { readBy: [...message.readBy, userId] });
-      await Chats.findOneAndUpdate({ _id: message.groupId }, { readBy: [...message.readBy, userId] });
+      await Chats.findOneAndUpdate(
+        { _id: message.groupId },
+        { readBy: [...message.readBy, userId], lastMessage: message.body },
+      );
       return false;
     }
 
@@ -43,7 +47,6 @@ export const MessagesMutations: MutationResolvers = {
 
   async deleteMessage(root, args) {
     const { messageId } = args;
-    console.log('messageId = ', messageId);
     await Messages.deleteOne({ _id: messageId });
     return false;
   },
