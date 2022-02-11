@@ -35,6 +35,7 @@ export type Chats = {
   members: Array<Scalars['String']>;
   readBy: Array<Scalars['String']>;
   title: Scalars['String'];
+  typingUsers: Array<Scalars['String']>;
 };
 
 export type Comment = {
@@ -72,6 +73,7 @@ export type Mutation = {
   setDesc: User;
   setReadBy: Scalars['Boolean'];
   setUnreadActivity: Activity;
+  updateTypingUsers: Scalars['Boolean'];
 };
 
 
@@ -180,6 +182,12 @@ export type MutationSetUnreadActivityArgs = {
   activityId: Scalars['String'];
 };
 
+
+export type MutationUpdateTypingUsersArgs = {
+  chatId: Scalars['String'];
+  newArray: Array<Scalars['String']>;
+};
+
 export type Posts = {
   __typename?: 'Posts';
   _id: Scalars['String'];
@@ -196,6 +204,7 @@ export type Query = {
   dummy?: Maybe<Scalars['Boolean']>;
   getAllPosts: Array<Posts>;
   getBlocked: Array<User>;
+  getChat?: Maybe<Chats>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
   getMessagesByGroupId: Array<Messages>;
@@ -218,6 +227,11 @@ export type Query = {
 
 export type QueryGetBlockedArgs = {
   userId: Scalars['String'];
+};
+
+
+export type QueryGetChatArgs = {
+  chatId: Scalars['String'];
 };
 
 
@@ -452,6 +466,7 @@ export type ChatsResolvers<ContextType = any, ParentType extends ResolversParent
   members?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   readBy?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  typingUsers?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -493,6 +508,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   setDesc?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSetDescArgs, 'newDesc' | 'userId'>>;
   setReadBy?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSetReadByArgs, 'messageId' | 'userId'>>;
   setUnreadActivity?: Resolver<ResolversTypes['Activity'], ParentType, ContextType, RequireFields<MutationSetUnreadActivityArgs, 'activityId'>>;
+  updateTypingUsers?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUpdateTypingUsersArgs, 'chatId' | 'newArray'>>;
 };
 
 export type PostsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Posts'] = ResolversParentTypes['Posts']> = {
@@ -510,6 +526,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   getAllPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
   getBlocked?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetBlockedArgs, 'userId'>>;
+  getChat?: Resolver<Maybe<ResolversTypes['Chats']>, ParentType, ContextType, RequireFields<QueryGetChatArgs, 'chatId'>>;
   getFollowers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowersArgs, 'userId'>>;
   getFollowing?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetFollowingArgs, 'userId'>>;
   getMessagesByGroupId?: Resolver<Array<ResolversTypes['Messages']>, ParentType, ContextType, RequireFields<QueryGetMessagesByGroupIdArgs, 'groupId'>>;

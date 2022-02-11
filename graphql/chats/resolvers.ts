@@ -32,6 +32,11 @@ export const ChatsQueries: QueryResolvers = {
     const unreadCount = await Chats.countDocuments({ members: { $in: [userId] }, readBy: { $nin: [userId] } });
     return unreadCount > 0;
   },
+
+  async getChat(root, args) {
+    const { chatId } = args;
+    return Chats.findOne({ _id: chatId });
+  },
 };
 
 export const ChatsMutations: MutationResolvers = {
@@ -53,12 +58,19 @@ export const ChatsMutations: MutationResolvers = {
       lastMessageTime,
       groupImage,
       readBy: members,
+      typingUsers: [],
     });
   },
 
   async deleteChat(root, args) {
     const { chatId } = args;
     await Chats.deleteOne({ _id: chatId });
+    return false;
+  },
+
+  async updateTypingUsers(root, args) {
+    const { chatId, newArray } = args;
+    await Chats.findOneAndUpdate({ _id: chatId }, { typingUsers: newArray });
     return false;
   },
 };
