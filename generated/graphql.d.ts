@@ -51,6 +51,7 @@ export type Messages = {
   body: Scalars['String'];
   groupId: Scalars['String'];
   readBy: Array<Scalars['String']>;
+  reply?: Maybe<Scalars['String']>;
   userSentId: Scalars['String'];
 };
 
@@ -94,6 +95,7 @@ export type MutationAddCommentArgs = {
 export type MutationAddMessageArgs = {
   body: Scalars['String'];
   groupId: Scalars['String'];
+  reply?: InputMaybe<Scalars['String']>;
   userSentId: Scalars['String'];
 };
 
@@ -486,6 +488,7 @@ export type MessagesResolvers<ContextType = any, ParentType extends ResolversPar
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   groupId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   readBy?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  reply?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userSentId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

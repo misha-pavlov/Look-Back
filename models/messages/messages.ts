@@ -6,6 +6,7 @@ export interface MessagesDocument {
   userSentId: string;
   groupId: string;
   readBy: string[];
+  reply?: string;
 }
 
 interface MessagesModel extends mongoose.Model<MessagesDocument> {}
@@ -16,6 +17,7 @@ const MessagesSchema = new mongoose.Schema({
   userSentId: { type: String, required: true },
   groupId: { type: String, required: true },
   readBy: { type: Array, required: true },
+  reply: String,
 });
 
 const Messages = mongoose.model<MessagesDocument, MessagesModel>('Messages', MessagesSchema);

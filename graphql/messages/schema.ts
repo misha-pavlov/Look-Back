@@ -7,6 +7,7 @@ export const MessagesSchema = gql`
     userSentId: String!
     groupId: String!
     readBy: [String!]!
+    reply: String
   }
 
   extend type Query {
@@ -14,7 +15,7 @@ export const MessagesSchema = gql`
   }
 
   extend type Mutation {
-    addMessage(body: String!, userSentId: String!, groupId: String!): Messages!
+    addMessage(body: String!, userSentId: String!, groupId: String!, reply: String): Messages!
     setReadBy(userId: String!, messageId: String!): Boolean!
     deleteMessage(messageId: String!): Boolean!
   }

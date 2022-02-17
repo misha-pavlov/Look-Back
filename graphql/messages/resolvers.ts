@@ -12,7 +12,7 @@ export const MessagesQueries: QueryResolvers = {
 
 export const MessagesMutations: MutationResolvers = {
   async addMessage(root, args) {
-    const { body, groupId, userSentId } = args;
+    const { body, groupId, userSentId, reply } = args;
     const readBy = [userSentId];
     await Chats.findOneAndUpdate({ _id: groupId }, { lastMessage: body, readBy });
     return Messages.create({
@@ -21,6 +21,7 @@ export const MessagesMutations: MutationResolvers = {
       userSentId,
       groupId,
       readBy,
+      reply,
     });
   },
 
